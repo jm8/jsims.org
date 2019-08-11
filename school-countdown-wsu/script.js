@@ -25,6 +25,22 @@ function isNotWeekend(date)
   return true;
 }
 
+function isTt(date)
+{
+  let dayOfWeek = new Date(date).getDay();
+  if (dayOfWeek == 2 || dayOfWeek == 4)
+    return true;
+  return false;
+}
+
+function isMwf(date)
+{
+  let dayOfWeek = new Date(date).getDay();
+  if (dayOfWeek == 1 || dayOfWeek == 3 || dayOfWeek == 5)
+    return true;
+  return false;
+}
+
 function isNotHoliday(date)
 {
   return !HOLIDAYS.includes(date);
@@ -65,11 +81,13 @@ function daysLeftUnfiltered()
     return allDays().length;
 }
 
-function daysLeftFiltered()
+function daysLeftFiltered(f)
 {
-  return allDays().filter(isNotHoliday).filter(isNotWeekend).length;
+    return allDays().filter(isNotHoliday).filter(f).length;
 }
 
 
-document.getElementById("big").textContent = daysLeftFiltered()
-document.getElementById("small").textContent = daysLeftUnfiltered()
+document.getElementById("school").textContent = daysLeftFiltered(isNotWeekend)
+document.getElementById("tt").textContent = daysLeftFiltered(isTt)
+document.getElementById("mwf").textContent = daysLeftFiltered(isMwf)
+document.getElementById("all").textContent = daysLeftUnfiltered()
