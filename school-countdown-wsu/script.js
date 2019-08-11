@@ -87,7 +87,7 @@ function daysLeftFiltered(f)
 }
 
 
-document.getElementById("school").textContent = daysLeftFiltered(isNotWeekend)
+document.getElementById("big").textContent = daysLeftFiltered(isNotWeekend)
 document.getElementById("tt").textContent = daysLeftFiltered(isTt)
 document.getElementById("mwf").textContent = daysLeftFiltered(isMwf)
-document.getElementById("all").textContent = daysLeftUnfiltered()
+document.getElementById("we").textContent = daysLeftUnfiltered()
