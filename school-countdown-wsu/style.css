@@ -17,12 +17,12 @@ body {
   color: #bbce8a;
 }
 
-#big {
+.big {
   /* font-family: 'Courier New', Courier, monospace; */
   font-size: 5rem;
 }
 
-#small {
+.small {
   margin-top: 2rem;
   /* font-family: 'Courier New', Courier, monospace;   */
   font-size: 3rem;
