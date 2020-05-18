@@ -95,13 +95,17 @@ img {
     max-height: 40em;
     max-width: 50em;
 }
-#tableofcontents dt,
-#tableofcontents dd {
+dt,
+dd {
     padding: 0.25em;
 }
 
-#tableofcontents dd {
+dd {
     margin-left: 1.5em;
+}
+
+dt {
+    font-weight: bolder;
 }
 
 iframe {
