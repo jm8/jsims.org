@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/darby-capstone-blog/assets/css/style.css">
+<title>Abstract Syntax Tree</title>
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Abstract Syntax Tree</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Abstract Syntax Tree" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I have finished creating an Ast type, or abstract syntax tree. When you write some code, for example, n &lt;- 10 fibs &lt;- [1, 1] REPEAT n-2 TIMES { APPEND(fibs, fibs[fib.lengths - 1] + fibs[fib.length]) } FOR EACH fib IN fibs { DISPLAY (fib) } that must get turned into an Abstract Syntax Tree (AST) representation, which makes it much possible run it. The code above would get turned into an AST something like this: Which is the following Javascript object [ { type: &quot;foreach&quot;, itemvar: { type: &quot;variable&quot;, name: &quot;item&quot; }, list: { type: &quot;list&quot;, items: [ { type: &quot;variable&quot;, name: &quot;a&quot; }, { type: &quot;variable&quot;, name: &quot;b&quot; }, { type: &quot;variable&quot;, name: &quot;c&quot; } ] }, block: [ { type: &quot;exprstat&quot;, expr: { type: &quot;call&quot;, procedure: { type: &quot;variable&quot;, name: &quot;DISPLAY&quot; }, paramaters: [ { type: &quot;variable&quot;, name: &quot;item&quot; } ] } } ] } ] Since I am using Typescript, I get to describe a type for the AST, which is super helpful becasue it lets my editor find errors and provide auto-completion. Basically the AST is made of expressions and statements. Expressions have a value, such as 2+2 or someVariable, wheras statements don’t, like REPEAT 10 TIMES { ... } or x &lt;- 4. Procedure calls are expressions, because they sometimes have a value (for example, INPUT()). However, sometimes you want to ignore the result, or you are calling a procedure that doesn’t return anything. That’s why I have exprstat, expression statement. It’s basically an statement that is only an expression, such as DISPLAY(). This is the entire definition of the AST type: export const operators = [&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;, &quot;MOD&quot; , &quot;=&quot;, &quot;!=&quot;, &quot;&gt;&quot;, &quot;&lt;&quot;, &quot;&gt;=&quot;, &quot;&lt;=&quot; , &quot;AND&quot;, &quot;OR&quot;] as const; export type Operator = typeof operators[number]; export function isLiteral(x: Ast | Token): x is Literal { return (x.type === &quot;string&quot; || x.type === &quot;number&quot; || x.type === &quot;boolean&quot;); } export type Literal = | { type: &quot;string&quot;, value: string } | { type: &quot;number&quot;, value: number } | { type: &quot;boolean&quot;, value: boolean }; export type Ast = Statement | Expression; export type Statement = | { type: &quot;assign&quot;, lhs: AssignableExpression, rhs: Expression } | { type: &quot;if&quot;, condition: Expression, iftrue: Statement[] } | { type: &quot;ifelse&quot;, condition: Expression, iftrue: Statement[], iffalse: Statement[] } | { type: &quot;repeattimes&quot;, times: Expression, block: Statement[] } | { type: &quot;repeatuntil&quot;, condition: Expression, block: Statement[] } | { type: &quot;foreach&quot;, itemvar: AssignableExpression, list: Expression, block: Statement[] } | { type: &quot;procedure&quot;, name: string, paramaters: string[], block: Statement[] } | { type: &quot;return&quot;, value: Expression } | { type: &quot;returnvoid&quot; } | { type: &quot;exprstat&quot;, expr: Expression } | { type: &quot;breakpoint&quot; } export type Expression = | { type: &quot;operator&quot;, operator: Operator, lhs: Expression, rhs: Expression } | { type: &quot;not&quot;, value: Expression } | { type: &quot;list&quot;, items: Expression[] } | { type: &quot;subscript&quot;, list: Expression, index: Expression } | { type: &quot;call&quot;, procedure: Expression, paramaters: Expression[] } | Literal | { type: &quot;variable&quot;, name: string } | { type: &quot;negate&quot;, value: Expression } ; export type AssignableExpression = | { type: &quot;variable&quot;, name: string } | { type: &quot;subscript&quot;, list: AssignableExpression, index: Expression } export function isAssignable(ast: Expression): ast is AssignableExpression { return ast.type === &quot;variable&quot; || (ast.type === &quot;subscript&quot; &amp;&amp; isAssignable(ast.list)); } which I have written to encode all the possible things you can write in the AP Computer Science Principles language." />
+<meta property="og:description" content="I have finished creating an Ast type, or abstract syntax tree. When you write some code, for example, n &lt;- 10 fibs &lt;- [1, 1] REPEAT n-2 TIMES { APPEND(fibs, fibs[fib.lengths - 1] + fibs[fib.length]) } FOR EACH fib IN fibs { DISPLAY (fib) } that must get turned into an Abstract Syntax Tree (AST) representation, which makes it much possible run it. The code above would get turned into an AST something like this: Which is the following Javascript object [ { type: &quot;foreach&quot;, itemvar: { type: &quot;variable&quot;, name: &quot;item&quot; }, list: { type: &quot;list&quot;, items: [ { type: &quot;variable&quot;, name: &quot;a&quot; }, { type: &quot;variable&quot;, name: &quot;b&quot; }, { type: &quot;variable&quot;, name: &quot;c&quot; } ] }, block: [ { type: &quot;exprstat&quot;, expr: { type: &quot;call&quot;, procedure: { type: &quot;variable&quot;, name: &quot;DISPLAY&quot; }, paramaters: [ { type: &quot;variable&quot;, name: &quot;item&quot; } ] } } ] } ] Since I am using Typescript, I get to describe a type for the AST, which is super helpful becasue it lets my editor find errors and provide auto-completion. Basically the AST is made of expressions and statements. Expressions have a value, such as 2+2 or someVariable, wheras statements don’t, like REPEAT 10 TIMES { ... } or x &lt;- 4. Procedure calls are expressions, because they sometimes have a value (for example, INPUT()). However, sometimes you want to ignore the result, or you are calling a procedure that doesn’t return anything. That’s why I have exprstat, expression statement. It’s basically an statement that is only an expression, such as DISPLAY(). This is the entire definition of the AST type: export const operators = [&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;, &quot;MOD&quot; , &quot;=&quot;, &quot;!=&quot;, &quot;&gt;&quot;, &quot;&lt;&quot;, &quot;&gt;=&quot;, &quot;&lt;=&quot; , &quot;AND&quot;, &quot;OR&quot;] as const; export type Operator = typeof operators[number]; export function isLiteral(x: Ast | Token): x is Literal { return (x.type === &quot;string&quot; || x.type === &quot;number&quot; || x.type === &quot;boolean&quot;); } export type Literal = | { type: &quot;string&quot;, value: string } | { type: &quot;number&quot;, value: number } | { type: &quot;boolean&quot;, value: boolean }; export type Ast = Statement | Expression; export type Statement = | { type: &quot;assign&quot;, lhs: AssignableExpression, rhs: Expression } | { type: &quot;if&quot;, condition: Expression, iftrue: Statement[] } | { type: &quot;ifelse&quot;, condition: Expression, iftrue: Statement[], iffalse: Statement[] } | { type: &quot;repeattimes&quot;, times: Expression, block: Statement[] } | { type: &quot;repeatuntil&quot;, condition: Expression, block: Statement[] } | { type: &quot;foreach&quot;, itemvar: AssignableExpression, list: Expression, block: Statement[] } | { type: &quot;procedure&quot;, name: string, paramaters: string[], block: Statement[] } | { type: &quot;return&quot;, value: Expression } | { type: &quot;returnvoid&quot; } | { type: &quot;exprstat&quot;, expr: Expression } | { type: &quot;breakpoint&quot; } export type Expression = | { type: &quot;operator&quot;, operator: Operator, lhs: Expression, rhs: Expression } | { type: &quot;not&quot;, value: Expression } | { type: &quot;list&quot;, items: Expression[] } | { type: &quot;subscript&quot;, list: Expression, index: Expression } | { type: &quot;call&quot;, procedure: Expression, paramaters: Expression[] } | Literal | { type: &quot;variable&quot;, name: string } | { type: &quot;negate&quot;, value: Expression } ; export type AssignableExpression = | { type: &quot;variable&quot;, name: string } | { type: &quot;subscript&quot;, list: AssignableExpression, index: Expression } export function isAssignable(ast: Expression): ast is AssignableExpression { return ast.type === &quot;variable&quot; || (ast.type === &quot;subscript&quot; &amp;&amp; isAssignable(ast.list)); } which I have written to encode all the possible things you can write in the AP Computer Science Principles language." />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-05T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Abstract Syntax Tree" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/darby-capstone-blog/2021/08/05/ast.html"},"@type":"BlogPosting","description":"I have finished creating an Ast type, or abstract syntax tree. When you write some code, for example, n &lt;- 10 fibs &lt;- [1, 1] REPEAT n-2 TIMES { APPEND(fibs, fibs[fib.lengths - 1] + fibs[fib.length]) } FOR EACH fib IN fibs { DISPLAY (fib) } that must get turned into an Abstract Syntax Tree (AST) representation, which makes it much possible run it. The code above would get turned into an AST something like this: Which is the following Javascript object [ { type: &quot;foreach&quot;, itemvar: { type: &quot;variable&quot;, name: &quot;item&quot; }, list: { type: &quot;list&quot;, items: [ { type: &quot;variable&quot;, name: &quot;a&quot; }, { type: &quot;variable&quot;, name: &quot;b&quot; }, { type: &quot;variable&quot;, name: &quot;c&quot; } ] }, block: [ { type: &quot;exprstat&quot;, expr: { type: &quot;call&quot;, procedure: { type: &quot;variable&quot;, name: &quot;DISPLAY&quot; }, paramaters: [ { type: &quot;variable&quot;, name: &quot;item&quot; } ] } } ] } ] Since I am using Typescript, I get to describe a type for the AST, which is super helpful becasue it lets my editor find errors and provide auto-completion. Basically the AST is made of expressions and statements. Expressions have a value, such as 2+2 or someVariable, wheras statements don’t, like REPEAT 10 TIMES { ... } or x &lt;- 4. Procedure calls are expressions, because they sometimes have a value (for example, INPUT()). However, sometimes you want to ignore the result, or you are calling a procedure that doesn’t return anything. That’s why I have exprstat, expression statement. It’s basically an statement that is only an expression, such as DISPLAY(). This is the entire definition of the AST type: export const operators = [&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;, &quot;MOD&quot; , &quot;=&quot;, &quot;!=&quot;, &quot;&gt;&quot;, &quot;&lt;&quot;, &quot;&gt;=&quot;, &quot;&lt;=&quot; , &quot;AND&quot;, &quot;OR&quot;] as const; export type Operator = typeof operators[number]; export function isLiteral(x: Ast | Token): x is Literal { return (x.type === &quot;string&quot; || x.type === &quot;number&quot; || x.type === &quot;boolean&quot;); } export type Literal = | { type: &quot;string&quot;, value: string } | { type: &quot;number&quot;, value: number } | { type: &quot;boolean&quot;, value: boolean }; export type Ast = Statement | Expression; export type Statement = | { type: &quot;assign&quot;, lhs: AssignableExpression, rhs: Expression } | { type: &quot;if&quot;, condition: Expression, iftrue: Statement[] } | { type: &quot;ifelse&quot;, condition: Expression, iftrue: Statement[], iffalse: Statement[] } | { type: &quot;repeattimes&quot;, times: Expression, block: Statement[] } | { type: &quot;repeatuntil&quot;, condition: Expression, block: Statement[] } | { type: &quot;foreach&quot;, itemvar: AssignableExpression, list: Expression, block: Statement[] } | { type: &quot;procedure&quot;, name: string, paramaters: string[], block: Statement[] } | { type: &quot;return&quot;, value: Expression } | { type: &quot;returnvoid&quot; } | { type: &quot;exprstat&quot;, expr: Expression } | { type: &quot;breakpoint&quot; } export type Expression = | { type: &quot;operator&quot;, operator: Operator, lhs: Expression, rhs: Expression } | { type: &quot;not&quot;, value: Expression } | { type: &quot;list&quot;, items: Expression[] } | { type: &quot;subscript&quot;, list: Expression, index: Expression } | { type: &quot;call&quot;, procedure: Expression, paramaters: Expression[] } | Literal | { type: &quot;variable&quot;, name: string } | { type: &quot;negate&quot;, value: Expression } ; export type AssignableExpression = | { type: &quot;variable&quot;, name: string } | { type: &quot;subscript&quot;, list: AssignableExpression, index: Expression } export function isAssignable(ast: Expression): ast is AssignableExpression { return ast.type === &quot;variable&quot; || (ast.type === &quot;subscript&quot; &amp;&amp; isAssignable(ast.list)); } which I have written to encode all the possible things you can write in the AP Computer Science Principles language.","headline":"Abstract Syntax Tree","dateModified":"2021-08-05T00:00:00-04:00","datePublished":"2021-08-05T00:00:00-04:00","url":"/darby-capstone-blog/2021/08/05/ast.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+</head>
+<body>
+  <header class="texture-red">
+    <div class="container"><div class="navbar">
+	<ul>
+		
+		<a href="/"><li  >About</li></a>
+		
+		<a href="/expectations"><li  >Expectations</li></a>
+		
+		<a href="/experience"><li  >Experience</li></a>
+		
+		<a href="/mentor"><li  >Mentor</li></a>
+		
+		<a href="/interview"><li  >Interview</li></a>
+		
+		<a href="/reflection"><li  >Reflection</li></a>
+		
+		<a href="https://jsims.org/apcsp"><li  >Run my Project</li></a>
+		
+	</ul>
+</div></div><div class="container">
+	<h1>Abstract Syntax Tree</h1>
+	<h4 class="post-description"></h4>
+	<div class="post-date" style="margin-top:20px">
+		Published on Aug 5, 2021
+	</div>
+	<ul class="post-tags"></ul>
+</div>
+</header>
+  <main>
+    <div class="container">
+      <div class="post-container">
+          <p>I have finished creating an <code class="language-plaintext highlighter-rouge">Ast</code> type, or abstract syntax tree.</p>
+
+<p>When you write some code, for example,</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n &lt;- 10
+fibs &lt;- [1, 1]
+REPEAT n-2 TIMES {
+    APPEND(fibs, fibs[fib.lengths - 1] + fibs[fib.length])
+}
+FOR EACH fib IN fibs {
+    DISPLAY (fib)
+}
+</code></pre></div></div>
+
+<p>that must get turned into an Abstract Syntax Tree (AST) representation, which makes it much possible run it.</p>
+
+<p>The code above would get turned into an AST something like this:</p>
+
+<p><img src="/darby-capstone-blog/assets/ast.png" alt="Picture of AST" /></p>
+
+<p>Which is the following Javascript object</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">foreach</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">itemvar</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">variable</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">item</span><span class="dl">"</span>
+    <span class="p">},</span>
+    <span class="na">list</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">list</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">items</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">variable</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">a</span><span class="dl">"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">variable</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">variable</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="na">block</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">exprstat</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">expr</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">call</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">procedure</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">variable</span><span class="dl">"</span><span class="p">,</span>
+            <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DISPLAY</span><span class="dl">"</span>
+          <span class="p">},</span>
+          <span class="na">paramaters</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">variable</span><span class="dl">"</span><span class="p">,</span>
+              <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">item</span><span class="dl">"</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p>Since I am using Typescript, I get to describe a type for the AST, which is super helpful becasue it lets my editor find errors and provide auto-completion.</p>
+
+<p>Basically the AST is made of expressions and statements. Expressions have a value, such as <code class="language-plaintext highlighter-rouge">2+2</code> or <code class="language-plaintext highlighter-rouge">someVariable</code>, wheras statements don’t, like <code class="language-plaintext highlighter-rouge">REPEAT 10 TIMES { ... }</code> or <code class="language-plaintext highlighter-rouge">x &lt;- 4</code>. Procedure calls are expressions, because they sometimes have a value (for example, <code class="language-plaintext highlighter-rouge">INPUT()</code>). However, sometimes you want to ignore the result, or you are calling a procedure that doesn’t return anything. That’s why I have <code class="language-plaintext highlighter-rouge">exprstat</code>, expression statement. It’s basically an statement that is only an expression, such as <code class="language-plaintext highlighter-rouge">DISPLAY()</code>.</p>
+
+<p>This is the entire definition of the AST type:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">operators</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">+</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">-</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">*</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">/</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">MOD</span><span class="dl">"</span>
+    <span class="p">,</span> <span class="dl">"</span><span class="s2">=</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">!=</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">&gt;</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">&lt;</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">&gt;=</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">&lt;=</span><span class="dl">"</span>
+    <span class="p">,</span> <span class="dl">"</span><span class="s2">AND</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">OR</span><span class="dl">"</span><span class="p">]</span> <span class="k">as</span> <span class="kd">const</span><span class="p">;</span>
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">Operator</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">operators</span><span class="p">[</span><span class="kr">number</span><span class="p">];</span>
+
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">isLiteral</span><span class="p">(</span><span class="nx">x</span><span class="p">:</span> <span class="nx">Ast</span> <span class="o">|</span> <span class="nx">Token</span><span class="p">):</span> <span class="nx">x</span> <span class="k">is</span> <span class="nx">Literal</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="kd">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">string</span><span class="dl">"</span> <span class="o">||</span> <span class="nx">x</span><span class="p">.</span><span class="kd">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">number</span><span class="dl">"</span> <span class="o">||</span> <span class="nx">x</span><span class="p">.</span><span class="kd">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">boolean</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">Literal</span> <span class="o">=</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">string</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="kr">string</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">number</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="kr">number</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">boolean</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">boolean</span> <span class="p">};</span>
+
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">Ast</span> <span class="o">=</span> <span class="nx">Statement</span> <span class="o">|</span> <span class="nx">Expression</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">Statement</span> <span class="o">=</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">assign</span><span class="dl">"</span><span class="p">,</span> <span class="na">lhs</span><span class="p">:</span> <span class="nx">AssignableExpression</span><span class="p">,</span> <span class="na">rhs</span><span class="p">:</span> <span class="nx">Expression</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">if</span><span class="dl">"</span><span class="p">,</span> <span class="na">condition</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">,</span> <span class="na">iftrue</span><span class="p">:</span> <span class="nx">Statement</span><span class="p">[]</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ifelse</span><span class="dl">"</span><span class="p">,</span> <span class="na">condition</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">,</span> <span class="na">iftrue</span><span class="p">:</span> <span class="nx">Statement</span><span class="p">[],</span> <span class="na">iffalse</span><span class="p">:</span> <span class="nx">Statement</span><span class="p">[]</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">repeattimes</span><span class="dl">"</span><span class="p">,</span> <span class="na">times</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">,</span> <span class="na">block</span><span class="p">:</span> <span class="nx">Statement</span><span class="p">[]</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">repeatuntil</span><span class="dl">"</span><span class="p">,</span> <span class="na">condition</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">,</span> <span class="na">block</span><span class="p">:</span> <span class="nx">Statement</span><span class="p">[]</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">foreach</span><span class="dl">"</span><span class="p">,</span> <span class="na">itemvar</span><span class="p">:</span> <span class="nx">AssignableExpression</span><span class="p">,</span> <span class="na">list</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">,</span> <span class="na">block</span><span class="p">:</span> <span class="nx">Statement</span><span class="p">[]</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">procedure</span><span class="dl">"</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">paramaters</span><span class="p">:</span> <span class="kr">string</span><span class="p">[],</span> <span class="na">block</span><span class="p">:</span> <span class="nx">Statement</span><span class="p">[]</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">return</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">Expression</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">returnvoid</span><span class="dl">"</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">exprstat</span><span class="dl">"</span><span class="p">,</span> <span class="na">expr</span><span class="p">:</span> <span class="nx">Expression</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">breakpoint</span><span class="dl">"</span> <span class="p">}</span>
+
+
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">Expression</span> <span class="o">=</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">operator</span><span class="dl">"</span><span class="p">,</span> <span class="na">operator</span><span class="p">:</span> <span class="nx">Operator</span><span class="p">,</span> <span class="na">lhs</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">,</span> <span class="na">rhs</span><span class="p">:</span> <span class="nx">Expression</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">not</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">Expression</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">list</span><span class="dl">"</span><span class="p">,</span> <span class="na">items</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">[]</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">subscript</span><span class="dl">"</span><span class="p">,</span> <span class="na">list</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">,</span> <span class="na">index</span><span class="p">:</span> <span class="nx">Expression</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">call</span><span class="dl">"</span><span class="p">,</span> <span class="na">procedure</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">,</span> <span class="na">paramaters</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">[]</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="nx">Literal</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">variable</span><span class="dl">"</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="kr">string</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">negate</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">Expression</span> <span class="p">}</span>
+    <span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">AssignableExpression</span> <span class="o">=</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">variable</span><span class="dl">"</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="kr">string</span> <span class="p">}</span>
+    <span class="o">|</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">subscript</span><span class="dl">"</span><span class="p">,</span> <span class="na">list</span><span class="p">:</span> <span class="nx">AssignableExpression</span><span class="p">,</span> <span class="na">index</span><span class="p">:</span> <span class="nx">Expression</span> <span class="p">}</span>
+
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">isAssignable</span><span class="p">(</span><span class="nx">ast</span><span class="p">:</span> <span class="nx">Expression</span><span class="p">):</span> <span class="nx">ast</span> <span class="k">is</span> <span class="nx">AssignableExpression</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">ast</span><span class="p">.</span><span class="kd">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">variable</span><span class="dl">"</span> <span class="o">||</span> <span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="kd">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">subscript</span><span class="dl">"</span> <span class="o">&amp;&amp;</span> <span class="nx">isAssignable</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">list</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>which I have written to encode all the possible things you can write in the AP Computer Science Principles language.</p>
+
+      </div>
+
+        <!-- Configure Disqus --></div>
+  </main></body>
+</html>

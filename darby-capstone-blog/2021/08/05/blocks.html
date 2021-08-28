@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/darby-capstone-blog/assets/css/style.css">
+<title>Rendering Code Blocks</title>
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Rendering Code Blocks</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Rendering Code Blocks" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="On the AP Computer Science principles test, there are two different representations for pseudocode, which can be found on the The first is Text, which looks like this: DISPLAY(expression) or IF(condition) { &lt;block of statements&gt; } The other is Block, which looks like this: For my application I have decided that people will write and edit their code in text format, since that is a lot easier than creating a full-on block editor (as seen in Scratch for example). However I want people to be able to see the block format, and so I have made it so that it can render the AST into these blocks. I have created a AstElement React component, which takes an AST and turns it into an HTML version of the block. For example, to render an if statement, it creates a filled in block, and also contains an indented block. It then recursivley creates more AstElements for each of the things inside it. My code looks something like this: const renderBlock = (block: Ast[]) =&gt; (&lt;div className=&quot;indentedBlock&quot;&gt;{block.map(render)}&lt;/div&gt;); const alwaysInParens = (subast: Ast) =&gt; &lt;AstElement ast={subast} parens=&quot;always&quot; /&gt; // ... if (ast.type === &quot;if&quot;) { return &lt;div className=&quot;filled&quot;&gt; &lt;div className=&quot;condition&quot;&gt;IF {alwaysInParens(ast.condition)}&lt;/div&gt; {renderBlock(ast.iftrue)} &lt;/div &gt; } Then I use CSS to style it and make it look like the blocks. For example, for the filled if statement, I give it a border and background and rounded corners: .CodeBlock .filled { border: 0.10em solid black; border-radius: .56em; padding: 0.3333em; background-color: #c7c8ca; } This way I can turn our AST from last post into this:" />
+<meta property="og:description" content="On the AP Computer Science principles test, there are two different representations for pseudocode, which can be found on the The first is Text, which looks like this: DISPLAY(expression) or IF(condition) { &lt;block of statements&gt; } The other is Block, which looks like this: For my application I have decided that people will write and edit their code in text format, since that is a lot easier than creating a full-on block editor (as seen in Scratch for example). However I want people to be able to see the block format, and so I have made it so that it can render the AST into these blocks. I have created a AstElement React component, which takes an AST and turns it into an HTML version of the block. For example, to render an if statement, it creates a filled in block, and also contains an indented block. It then recursivley creates more AstElements for each of the things inside it. My code looks something like this: const renderBlock = (block: Ast[]) =&gt; (&lt;div className=&quot;indentedBlock&quot;&gt;{block.map(render)}&lt;/div&gt;); const alwaysInParens = (subast: Ast) =&gt; &lt;AstElement ast={subast} parens=&quot;always&quot; /&gt; // ... if (ast.type === &quot;if&quot;) { return &lt;div className=&quot;filled&quot;&gt; &lt;div className=&quot;condition&quot;&gt;IF {alwaysInParens(ast.condition)}&lt;/div&gt; {renderBlock(ast.iftrue)} &lt;/div &gt; } Then I use CSS to style it and make it look like the blocks. For example, for the filled if statement, I give it a border and background and rounded corners: .CodeBlock .filled { border: 0.10em solid black; border-radius: .56em; padding: 0.3333em; background-color: #c7c8ca; } This way I can turn our AST from last post into this:" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-05T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Rendering Code Blocks" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/darby-capstone-blog/2021/08/05/blocks.html"},"@type":"BlogPosting","description":"On the AP Computer Science principles test, there are two different representations for pseudocode, which can be found on the The first is Text, which looks like this: DISPLAY(expression) or IF(condition) { &lt;block of statements&gt; } The other is Block, which looks like this: For my application I have decided that people will write and edit their code in text format, since that is a lot easier than creating a full-on block editor (as seen in Scratch for example). However I want people to be able to see the block format, and so I have made it so that it can render the AST into these blocks. I have created a AstElement React component, which takes an AST and turns it into an HTML version of the block. For example, to render an if statement, it creates a filled in block, and also contains an indented block. It then recursivley creates more AstElements for each of the things inside it. My code looks something like this: const renderBlock = (block: Ast[]) =&gt; (&lt;div className=&quot;indentedBlock&quot;&gt;{block.map(render)}&lt;/div&gt;); const alwaysInParens = (subast: Ast) =&gt; &lt;AstElement ast={subast} parens=&quot;always&quot; /&gt; // ... if (ast.type === &quot;if&quot;) { return &lt;div className=&quot;filled&quot;&gt; &lt;div className=&quot;condition&quot;&gt;IF {alwaysInParens(ast.condition)}&lt;/div&gt; {renderBlock(ast.iftrue)} &lt;/div &gt; } Then I use CSS to style it and make it look like the blocks. For example, for the filled if statement, I give it a border and background and rounded corners: .CodeBlock .filled { border: 0.10em solid black; border-radius: .56em; padding: 0.3333em; background-color: #c7c8ca; } This way I can turn our AST from last post into this:","headline":"Rendering Code Blocks","dateModified":"2021-08-05T00:00:00-04:00","datePublished":"2021-08-05T00:00:00-04:00","url":"/darby-capstone-blog/2021/08/05/blocks.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+</head>
+<body>
+  <header class="texture-red">
+    <div class="container"><div class="navbar">
+	<ul>
+		
+		<a href="/"><li  >About</li></a>
+		
+		<a href="/expectations"><li  >Expectations</li></a>
+		
+		<a href="/experience"><li  >Experience</li></a>
+		
+		<a href="/mentor"><li  >Mentor</li></a>
+		
+		<a href="/interview"><li  >Interview</li></a>
+		
+		<a href="/reflection"><li  >Reflection</li></a>
+		
+		<a href="https://jsims.org/apcsp"><li  >Run my Project</li></a>
+		
+	</ul>
+</div></div><div class="container">
+	<h1>Rendering Code Blocks</h1>
+	<h4 class="post-description"></h4>
+	<div class="post-date" style="margin-top:20px">
+		Published on Aug 5, 2021
+	</div>
+	<ul class="post-tags"></ul>
+</div>
+</header>
+  <main>
+    <div class="container">
+      <div class="post-container">
+          <p>On the AP Computer Science principles test, there are two different representations for pseudocode, which can be found on the <a href="reference sheet"></a></p>
+
+<p>The first is Text, which looks like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DISPLAY(expression)
+</code></pre></div></div>
+
+<p>or</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF(condition) {
+    &lt;block of statements&gt;
+}
+</code></pre></div></div>
+
+<p>The other is Block, which looks like this:</p>
+
+<p><img src="/darby-capstone-blog/assets/display-block.png" alt="Display statement in block format" /></p>
+
+<p><img src="/darby-capstone-blog/assets/if-block.png" alt="If statement in block format" /></p>
+
+<p>For my application I have decided that people will write and edit their code in text format, since that is a lot easier than creating a full-on block editor (as seen in <a href="https://scratch.mit.edu/">Scratch</a> for example).</p>
+
+<p>However I want people to be able to see the block format, and so I have made it so that it can render the AST into these blocks.</p>
+
+<p>I have created a <code class="language-plaintext highlighter-rouge">AstElement</code> React component, which takes an AST and turns it into an HTML version of the block. For example, to render an if statement, it creates a filled in block, and also contains an indented block. It then recursivley creates more <code class="language-plaintext highlighter-rouge">AstElement</code>s for each of the things inside it. My code looks something like this:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">renderBlock</span> <span class="o">=</span> <span class="p">(</span><span class="nx">block</span><span class="p">:</span> <span class="nx">Ast</span><span class="p">[])</span> <span class="o">=&gt;</span> <span class="p">(&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="p">=</span><span class="s">"indentedBlock"</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">block</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">render</span><span class="p">)</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;);</span>
+<span class="kd">const</span> <span class="nx">alwaysInParens</span> <span class="o">=</span> <span class="p">(</span><span class="nx">subast</span><span class="p">:</span> <span class="nx">Ast</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nc">AstElement</span> <span class="na">ast</span><span class="p">=</span><span class="si">{</span><span class="nx">subast</span><span class="si">}</span> <span class="na">parens</span><span class="p">=</span><span class="s">"always"</span> <span class="p">/&gt;</span>
+<span class="c1">// ...</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="kd">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">if</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="p">=</span><span class="s">"filled"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="p">=</span><span class="s">"condition"</span><span class="p">&gt;</span>IF <span class="si">{</span><span class="nx">alwaysInParens</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">condition</span><span class="p">)</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="si">{</span><span class="nx">renderBlock</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">iftrue</span><span class="p">)</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span> <span class="p">&gt;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Then I use CSS to style it and make it look like the blocks. For example, for the filled if statement, I give it a border and background and rounded corners:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.CodeBlock</span> <span class="nc">.filled</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">0.10em</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">border-radius</span><span class="p">:</span> <span class="m">.56em</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">0.3333em</span><span class="p">;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#c7c8ca</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This way I can turn our AST from last post into this:</p>
+
+<p><img src="/darby-capstone-blog/assets/my-block-example.png" alt="Block code rendering example" /></p>
+
+      </div>
+
+        <!-- Configure Disqus --></div>
+  </main></body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/darby-capstone-blog/assets/css/style.css">
+<title>Typescript and React</title>
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Typescript and React</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Typescript and React" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Since my program is going to be on the web, it must be in Javascript. However I am using Typescript. Typescript code gets turned into Javascript code, which is the programming language every web application uses. The reason I am using Typescript instead of Javascript is that it in plain Javascript it is really easy to make mistakes like this, and it won’t tell you. It can be really hard to find these kinds of errors. 2+&quot;hello&quot; // =&gt; &quot;2hello&quot; let x = {a: 2} x.b // =&gt; undefined However in Typescript the compiler will tell you as soon as you type it. This will make it and faster to write my code. Also, I am choosing to use React, which is a UI framework. It basically makes it a lot easier to write your UI by letting you making components, which lets you easily split up parts of the UI and reuse components. They will automatically react when something changes in their properties. For example, I could make a component called Editor, and do something like this: &lt;Editor value={code} /&gt; And the Editor would re render whenever code changed, and I wouldn’t have to keep track of that myself. This will also help me make code faster and more organized. What’s nice about using Typescript and React is I can just do npx create-react-app --template typescript, and it automatically makes all the files I need. Then I can just run npm start and it’ll automatically recompile when I make changes." />
+<meta property="og:description" content="Since my program is going to be on the web, it must be in Javascript. However I am using Typescript. Typescript code gets turned into Javascript code, which is the programming language every web application uses. The reason I am using Typescript instead of Javascript is that it in plain Javascript it is really easy to make mistakes like this, and it won’t tell you. It can be really hard to find these kinds of errors. 2+&quot;hello&quot; // =&gt; &quot;2hello&quot; let x = {a: 2} x.b // =&gt; undefined However in Typescript the compiler will tell you as soon as you type it. This will make it and faster to write my code. Also, I am choosing to use React, which is a UI framework. It basically makes it a lot easier to write your UI by letting you making components, which lets you easily split up parts of the UI and reuse components. They will automatically react when something changes in their properties. For example, I could make a component called Editor, and do something like this: &lt;Editor value={code} /&gt; And the Editor would re render whenever code changed, and I wouldn’t have to keep track of that myself. This will also help me make code faster and more organized. What’s nice about using Typescript and React is I can just do npx create-react-app --template typescript, and it automatically makes all the files I need. Then I can just run npm start and it’ll automatically recompile when I make changes." />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-03T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Typescript and React" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/darby-capstone-blog/2021/08/03/typescript-and-react.html"},"@type":"BlogPosting","description":"Since my program is going to be on the web, it must be in Javascript. However I am using Typescript. Typescript code gets turned into Javascript code, which is the programming language every web application uses. The reason I am using Typescript instead of Javascript is that it in plain Javascript it is really easy to make mistakes like this, and it won’t tell you. It can be really hard to find these kinds of errors. 2+&quot;hello&quot; // =&gt; &quot;2hello&quot; let x = {a: 2} x.b // =&gt; undefined However in Typescript the compiler will tell you as soon as you type it. This will make it and faster to write my code. Also, I am choosing to use React, which is a UI framework. It basically makes it a lot easier to write your UI by letting you making components, which lets you easily split up parts of the UI and reuse components. They will automatically react when something changes in their properties. For example, I could make a component called Editor, and do something like this: &lt;Editor value={code} /&gt; And the Editor would re render whenever code changed, and I wouldn’t have to keep track of that myself. This will also help me make code faster and more organized. What’s nice about using Typescript and React is I can just do npx create-react-app --template typescript, and it automatically makes all the files I need. Then I can just run npm start and it’ll automatically recompile when I make changes.","headline":"Typescript and React","dateModified":"2021-08-03T00:00:00-04:00","datePublished":"2021-08-03T00:00:00-04:00","url":"/darby-capstone-blog/2021/08/03/typescript-and-react.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+</head>
+<body>
+  <header class="texture-red">
+    <div class="container"><div class="navbar">
+	<ul>
+		
+		<a href="/"><li  >About</li></a>
+		
+		<a href="/expectations"><li  >Expectations</li></a>
+		
+		<a href="/experience"><li  >Experience</li></a>
+		
+		<a href="/mentor"><li  >Mentor</li></a>
+		
+		<a href="/interview"><li  >Interview</li></a>
+		
+		<a href="/reflection"><li  >Reflection</li></a>
+		
+		<a href="https://jsims.org/apcsp"><li  >Run my Project</li></a>
+		
+	</ul>
+</div></div><div class="container">
+	<h1>Typescript and React</h1>
+	<h4 class="post-description"></h4>
+	<div class="post-date" style="margin-top:20px">
+		Published on Aug 3, 2021
+	</div>
+	<ul class="post-tags"></ul>
+</div>
+</header>
+  <main>
+    <div class="container">
+      <div class="post-container">
+          <p>Since my program is going to be on the web, it must be in Javascript. However I am using Typescript. Typescript code gets turned into Javascript code, which is the programming language every web application uses.</p>
+
+<p>The reason I am using Typescript instead of Javascript is that it in plain Javascript it is really easy to make mistakes like this, and it won’t tell you. It can be really hard to find these kinds of errors.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span><span class="o">+</span><span class="dl">"</span><span class="s2">hello</span><span class="dl">"</span> <span class="c1">// =&gt; "2hello"</span>
+
+<span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{</span><span class="na">a</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="nx">x</span><span class="p">.</span><span class="nx">b</span> <span class="c1">// =&gt; undefined</span>
+</code></pre></div></div>
+
+<p>However in Typescript the compiler will tell you as soon as you type it. This will make it and faster to write my code.</p>
+
+<p>Also, I am choosing to use React, which is a UI framework. It basically makes it a lot easier to write your UI by letting you making components, which lets you easily split up parts of the UI and reuse components. They will automatically react when something changes in their properties. For example, I could make a component called <code class="language-plaintext highlighter-rouge">Editor</code>, and do something like this:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">Editor</span> <span class="na">value</span><span class="p">=</span><span class="si">{</span><span class="nx">code</span><span class="si">}</span> <span class="p">/&gt;</span>
+</code></pre></div></div>
+
+<p>And the Editor would re render whenever <code class="language-plaintext highlighter-rouge">code</code> changed, and I wouldn’t have to keep track of that myself. This will also help me make code faster and more organized.</p>
+
+<p>What’s nice about using Typescript and React is I can just do <code class="language-plaintext highlighter-rouge">npx create-react-app --template typescript</code>, and it automatically makes all the files I need. Then I can just run <code class="language-plaintext highlighter-rouge">npm start</code> and it’ll automatically recompile when I make changes.</p>
+
+      </div>
+
+        <!-- Configure Disqus --></div>
+  </main></body>
+</html>
