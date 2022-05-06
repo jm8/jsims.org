@@ -1,152 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minercat3D</title>
-  
-  
-  
-  
-  
-  <script type="module" crossorigin src="/minercat3d/assets/index.cb58d8ba.js"></script>
-  <link rel="stylesheet" href="/minercat3d/assets/index.1a741d7f.css">
-</head>
-
-<body>
-  <div id="navigation">
-  </div>
-  <div id="app">
-    <div id="page">
-      <div id="view">
-        <div class="preview">
-          <div class="inner">
-            <div class="flex-row preview-row force-row">
-              <div class="flex-row project-header"><a href="http://jsims.org"><img class="avatar" alt="josh"
-                    src="data:image/webp;base64,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"></a>
-                <div class="title">
-                  <div class="project-title no-edit" title="Miner Cat 3D">Miner Cat 3D</div>by <a
-                    href="http://jsims.org">josh</a>
-                </div>
-              </div>
-              <div class="project-buttons"><a href="https://github.com/jm8/minercat3d-webgl/"
-                  style="box-sizing: border-box; color: white;" class="button button see-inside-button"><span>See
-                    inside</span></a>
-              </div>
-            </div>
-            <div class="flex-row preview-row">
-              <div class="guiPlayer">
-                <div class="stage-wrapper_stage-wrapper_2bejr box_box_2jjDp" dir="ltr">
-                  <div class="box_box_2jjDp">
-                    <div class="stage-header_stage-header-wrapper_1F4gT box_box_2jjDp">
-                      <div class="stage-header_stage-menu-wrapper_15JJt box_box_2jjDp"
-                        style="padding-bottom: 0px; padding-top: 0px;">
-                        <div class="controls_controls-container_2xinB"><img id="greenflag"
-                            class="green-flag_green-flag_1kiAo" draggable="false" src="/minercat3d/assets/greenflag.3684183e.svg" title="Go"><img
-                            class="stop-all_stop-all_1Y8P9" draggable="false" src="/minercat3d/assets/stop.083670f1.svg" title="Stop" id="stop">
-                        </div>
-                        <div class="stage-header_stage-size-row_14N65">
-                          <div><span class="button_outlined-button_1bS__ stage-header_stage-button_hkl9B"
-                              id="enterfullscreen" role="button">
-                              <div class="button_content_3jdgj"><img alt="Enter full screen mode"
-                                  class="stage-header_stage-button-icon_3zzFK" draggable="false" src="/minercat3d/assets/fullscreen.8f148cc2.svg"
-                                  title="Full Screen Control">
-                              </div>
-                            </span></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="stage-wrapper_stage-canvas-wrapper_3ewmd box_box_2jjDp">
-                    <div class="stage_stage-wrapper_eRRuk box_box_2jjDp">
-                      <div class="stage_stage_1fD7k box_box_2jjDp" style="width: 480px; height: 360px;">
-                        <div id="game">
-                          <canvas width=960 height=720 style="width: 480px; height: 360px;" id="canvas"></canvas>
-                          <div id="shopmenu">
-                            <div id="shoptabs" class="tabs">
-                              <button class="gamebutton selected tab" id="pickaxetab"></button>
-                              <button class="gamebutton tab" id="backpacktab"></button>
-                              <button class="gamebutton tab" id="armortab"></button>
-                            </div>
-                            <div class="shopmain">
-                              <div class="info">
-                                <div id="shopinfoname">stone pickaxe</div>
-                                <div id="shopinfonumber">speed: 3</div>
-                              </div>
-                              <img id="shopicon" class="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAtUlEQVQ4T2NkwAKKPBj+owv37WBgxKYWQxCkuTBUBUNt/+o7KGIwA1EMgGm+8eQnhgEaMuxgMZDchy+/GY5ffsEAMgSrC9B1e1rKogjhNQBfmMAMIskAZG9tP/6YAWQI0QYga4ZpQncF1qgBeQObZlCggcSRXYHVAFyaYQbjNQCfZoIGENKM1wBiNMMMsNSVQE1IxGqGpRGQenhSJlUzekLDiBZcuQ5bCgWJgaMRln1J1QzSCwBaONGujvlBzQAAAABJRU5ErkJggg==">
-                              <div id="shopprice" class="price">100$</div>
-                              <button class="gamebutton">buy</button>
-                            </div>
-                          </div>
-                          <div id="gui">
-                            <div class="row"><span id="cash"></span><span id="layer"></span></div>
-                            <div class="buttons">
-                              <button class="gamebutton" id="shop">shop</button>
-                              <button class="gamebutton" id="sellall">sell all</button>
-                            </div>
-                            <div class="row"><span id="hp"></span><span id="backpack"></span></div>
-                          </div>
-                          <div id="crosshair"></div>
-                        </div>
-
-                        <div class="stage_frame-wrapper_1JaS_ box_box_2jjDp"></div>
-                      </div>
-                      <div class="stage_stage-overlays_eE14L box_box_2jjDp">
-                        <div class="stage_stage-bottom-wrapper_KIBfo" style="width: 480px; height: 360px;"></div>
-                        <canvas class="stage_dragging-sprite_pxcJj" width="0" height="0"></canvas>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="flex-row project-notes">
-                <div class="description-block">
-                  <div class="project-textlabel"><span>Instructions</span></div>
-                  <div class="project-description">Miner Cat 3D the sequel of Miner Cat 2D<br>
-                    ___________________________________________<br>
-                    <br>
-                    WASD, space and mouse to move the cat.<br>
-                    Mine blocks with your mouse.<br>
-                    ___________________________________________<br>
-                    <br>
-                    Explore caves, avoid lava, get better gear and find new layers.<br>
-                  </div>
-                </div>
-                <div class="description-block">
-                  <div class="project-textlabel"><span>Notes and Credits</span></div>
-                  <div class="project-description">This game is inspired by the roblox game called<br>
-                    "Miner Cat 2 on Scratch".<br>
-                    Check it out with this link:<br>
-                    <a
-                      href="https://scratch.mit.edu/projects/351793769/">https://scratch.mit.edu/projects/351793769/</a><br>
-                    ___________________________________________<br>
-                    <br>
-                    Code: me<br>
-                    Art: <a href="https://scratch.mit.edu/users/Coltroc/">@Coltroc</a>, inspired by minecraft and
-                    others.<br>
-                    Music: Minecraft<br>
-                    Scratch: massachusetts institute of technology<br>
-                    ___________________________________________<br>
-                    <br>
-                    <a href="#">#MinerCat2</a> <a href="#">#Minercat</a> <a href="#">#Bigproject</a> <a
-                      href="#">#Coltroc</a>
-                    <a href="#">#Money</a> <a href="#">#mining</a> <a href="#">#Game</a> <a href="#">#Games</a> <a
-                      href="#">#Scrolling</a> <a href="#">#Platformer</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <pre id="debug">
-
-            </pre>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-  
-</body>
-
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>jsims.org</h3>
+    <ul>
+      <li><a href="https://capstone.jsims.org">Capstone blog</a></li>
+      <li><a href="https://apcsp.jsims.org">APCSP interpreter (capstone project)</a></li>
+      <li><a href="https://jsims.org/minercat3d">Minercat 3d</a></li>
+    </ul>
+  </body>
 </html>
