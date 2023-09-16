@@ -13,11 +13,11 @@ var Bt=Object.defineProperty;var Mt=(e,t,o)=>t in e?Bt(e,t,{enumerable:!0,config
     <div class="stage-header_stage-header-wrapper-overlay_5vfJa box_box_2jjDp">
       <div class="stage-header_stage-menu-wrapper_15JJt box_box_2jjDp" style="width: 960px;">
         <div class="controls_controls-container_2xinB"><img class="green-flag_green-flag_1kiAo"
-          draggable="false" src="/greenflag.svg" title="Go"><img class="stop-all_stop-all_1Y8P9"
-          draggable="false" src="/stop.svg" title="Stop"></div><span
+          draggable="false" src="/minercat3d/greenflag.svg" title="Go"><img class="stop-all_stop-all_1Y8P9"
+          draggable="false" src="/minercat3d/stop.svg" title="Stop"></div><span
         class="button_outlined-button_1bS__ stage-header_stage-button_hkl9B" role="button">
         <div class="button_content_3jdgj"><img id="closefullscreen" alt="Exit full screen mode"
-            class="stage-header_stage-button-icon_3zzFK" draggable="false" src="/closefullscreen.svg"
+            class="stage-header_stage-button-icon_3zzFK" draggable="false" src="/minercat3d/closefullscreen.svg"
             title="Full Screen Control">
         </div>
       </span>
@@ -28,15 +28,15 @@ var Bt=Object.defineProperty;var Mt=(e,t,o)=>t in e?Bt(e,t,{enumerable:!0,config
       style="padding-bottom: 0px; padding-top: 0px;">
       <!-- I don't know why but I had to add these width: 20px; height: 20px or else it to big -->
       <div class="controls_controls-container_2xinB"><img id="greenflag"
-          class="green-flag_green-flag_1kiAo" draggable="false" src="/greenflag.svg" title="Go"
+          class="green-flag_green-flag_1kiAo" draggable="false" src="/minercat3d/greenflag.svg" title="Go"
           ><img class="stop-all_stop-all_1Y8P9" draggable="false"
-           src="/stop.svg" title="Stop" id="stop"></div>
+           src="/minercat3d/stop.svg" title="Stop" id="stop"></div>
       <div class="stage-header_stage-size-row_14N65">
         <div><span class="button_outlined-button_1bS__ stage-header_stage-button_hkl9B"
              id="enterfullscreen" role="button">
             <div class="button_content_3jdgj"><img alt="Enter full screen mode"
                 class="stage-header_stage-button-icon_3zzFK" draggable="false"
-                src="/fullscreen.svg" title="Full Screen Control">
+                src="/minercat3d/fullscreen.svg" title="Full Screen Control">
             </div>
           </span></div>
       </div>
